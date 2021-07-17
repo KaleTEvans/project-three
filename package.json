@@ -18,7 +18,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "if-env": "^1.0.4"
+    "dotenv": "^10.0.0",
+    "if-env": "^1.0.4",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "concurrently": "^5.2.0"

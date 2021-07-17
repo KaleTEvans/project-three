@@ -40,11 +40,11 @@ const resolvers = {
     },
 
     //change name
-    saveBook: async (parent, { bookData }, context) => {
+    saveMovie: async (parent, { movieData }, context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { savedBooks: bookData } },
+          { $push: { savedMovies: movieData } },
           { new: true }
         );
 
@@ -55,11 +55,11 @@ const resolvers = {
     },
     
     //change name 
-    removeBook: async (parent, { bookId }, context) => {
+    removeMovie: async (parent, { movieId }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: { bookId } } },
+          { $pull: { savedMovies: { movieId } } },
           { new: true }
         );
 
