@@ -12,9 +12,6 @@ const movieSchema = new Schema({
     type: String,
     required: true,
   },
-  genres: {
-    type: Array
-  },
   movieId: {
     type: String,
     required: true,
@@ -24,10 +21,12 @@ const movieSchema = new Schema({
   },
   image: {
     type: String,
-  },
-  link: {
-    type: String,
-  },
+  }
+},
+{
+  toJson: {
+    getters: true
+  }
 });
 
-module.exports = bookSchema;
+module.exports = movieSchema;

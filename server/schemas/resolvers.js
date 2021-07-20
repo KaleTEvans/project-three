@@ -1,6 +1,9 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Movie } = require('../models');
 const { signToken } = require('../utils/auth');
+const fetch = require('node-fetch');
+require('dotenv').config();
+const { apiKey } = process.env;
 
 const resolvers = {
   Query: {
@@ -13,6 +16,18 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
+    popularMovies: () => {
+      return fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`)
+      .then(res => res.json())
+    },
+    singleMovie: (root, args) => {
+      return fetch(`https://api.themoviedb.org/3/search/movie/?api_key=${apiKey}&language=en-US&query=${args.title}&page=1`)
+      .then(res => res.json())
+    },
+    savedMovies: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Movie.find(params).sort({ createdAt: -1 });
+    }
   },
 
   Mutation: {
@@ -39,7 +54,6 @@ const resolvers = {
       return { token, user };
     },
 
-    //change name
     saveMovie: async (parent, { movieData }, context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
@@ -54,7 +68,6 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     
-    //change name 
     removeMovie: async (parent, { movieId }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
@@ -68,7 +81,7 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-  },
+  }
 };
 
 module.exports = resolvers;
