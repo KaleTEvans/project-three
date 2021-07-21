@@ -67,7 +67,7 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await saveBook(bookToSave, token);
+      const response = await handleSaveBook(bookToSave, token);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -94,7 +94,7 @@ const SearchBooks = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type='text'
                   size='lg'
-                  placeholder='Search for a book'
+                  placeholder='Search for a movie'
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -111,7 +111,7 @@ const SearchBooks = () => {
         <h2>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
-            : 'Search for a book to begin'}
+            : 'Search for a movie to begin'}
         </h2>
         <CardColumns>
           {searchedBooks.map((book) => {
