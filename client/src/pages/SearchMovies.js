@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
+import { useQuery } from '@apollo/react-hooks';
+import { QUERY_POPULAR } from '../utils/queries';
+import PopularList from '../components/PopularMovies';
+
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { SAVE_MOVIE } from '../utils/mutations';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
+  // query for popular movie list
+  const { loading, data } = useQuery(QUERY_POPULAR);
+
+  const popular = data?.popularMovies || [];
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
@@ -111,7 +119,7 @@ const SearchBooks = () => {
         <h2>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
-            : 'Search for a movie to begin'}
+            : <PopularList popular={popular} />}
         </h2>
         <CardColumns>
           {searchedBooks.map((book) => {
