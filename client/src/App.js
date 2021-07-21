@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink,} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import SearchBooks from './pages/SearchBooks';
-import SavedBooks from './pages/SavedBooks';
+import SearchMovies from './pages/SearchMovies';
+import SavedMovies from './pages/SavedMovies';
 import Navbar from './components/Navbar';
 
 // main gql API endpoint
@@ -34,8 +34,8 @@ function App() {
         <>
           <Navbar />
           <Switch>
-            <Route exact path="/" component={SearchBooks} />
-            <Route exact path="/saved" component={SavedBooks} />
+            <Route exact path="/" component={SearchMovies} />
+            <Route exact path="/saved" component={SavedMovies} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
           </Switch>
         </>

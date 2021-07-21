@@ -25,7 +25,7 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await deleteBook(bookId, token);
+      const { data } = await handleDeleteBook(bookId, token);
       
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
@@ -35,15 +35,15 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
-    return <h2>LOADING...</h2>;
-  }
+  // if (!userDataLength) {
+  //   return <h2>LOADING...</h2>;
+  // }
 
   return (
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>Viewing saved books!</h1>
+          <h1>Viewing saved movies!</h1>
         </Container>
       </Jumbotron>
       <Container>
@@ -62,7 +62,7 @@ const SavedBooks = () => {
                   <p className='small'>Authors: {book.authors}</p>
                   <Card.Text>{book.description}</Card.Text>
                   <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
-                    Delete this Book!
+                    Delete this movie!
                   </Button>
                 </Card.Body>
               </Card>
