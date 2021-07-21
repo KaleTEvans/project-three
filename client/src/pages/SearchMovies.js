@@ -3,7 +3,7 @@ import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'reac
 
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
-import { SAVE_BOOK } from '../utils/mutations';
+import { SAVE_MOVIE } from '../utils/mutations';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
@@ -84,7 +84,7 @@ const SearchBooks = () => {
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>Search for Books!</h1>
+          <h1>Search for Movies!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -130,8 +130,8 @@ const SearchBooks = () => {
                       className='btn-block btn-info'
                       onClick={() => handleSaveBook(book.bookId)}>
                       {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                        ? 'This book has already been saved!'
-                        : 'Save this Book!'}
+                        ? 'This movie has already been saved!'
+                        : 'Save this movie!'}
                     </Button>
                   )}
                 </Card.Body>
