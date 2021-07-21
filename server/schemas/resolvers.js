@@ -70,19 +70,19 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     
-    // removeMovie: async (parent, { movieId }, context) => {
-    //   if (context.user) {
-    //     const updatedUser = await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $pull: { savedMovies: { movieId } } },
-    //       { new: true }
-    //     );
+    removeMovie: async (parent, { movieId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedMovies: { movieId } } },
+          { new: true }
+        );
 
-    //     return updatedUser;
-    //   }
+        return updatedUser;
+      }
 
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+      throw new AuthenticationError('You need to be logged in!');
+    },
   }
 };
 

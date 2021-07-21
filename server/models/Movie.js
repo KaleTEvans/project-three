@@ -1,5 +1,6 @@
 const { Schema } = require('mongoose');
 
+
 // schema for movies that are saved by the user
 const movieSchema = new Schema({
   movieTitle: [
@@ -21,11 +22,6 @@ const movieSchema = new Schema({
   },
   image: {
     type: String,
-  }
-},
-{
-  toJson: {
-    getters: true
   }
 });
 
