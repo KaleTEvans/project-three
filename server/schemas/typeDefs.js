@@ -46,9 +46,12 @@ const typeDefs = gql`
     removeMovie(id: String!): User
   }
   
+
 `;
 
 module.exports = typeDefs;
+
+
 
 
 
