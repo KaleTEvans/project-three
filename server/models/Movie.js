@@ -2,24 +2,27 @@ const { Schema } = require('mongoose');
 
 // schema for movies that are saved by the user
 const movieSchema = new Schema({
-  movieTitle: [
-    {
-      type: String,
-      required: true
-    },
-  ],
+  id: {
+    type: String,
+    unique: true
+  },
+  title: 
+  {
+    type: String,
+    required: true
+  },
   overview: {
     type: String,
     required: true,
   },
-  movieId: {
+  poster_path: {
     type: String,
     required: true,
   },
-  releaseDate: {
+  release_date: {
     type: String
   },
-  image: {
+  vote_average: {
     type: String,
   }
 },
