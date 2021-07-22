@@ -34,7 +34,7 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_SEARCH = gql`
-  query singleMovie($title: String!): {
+  query singleMovie($title: String!) {
     singleMovie(title: $title) {
       results {
         id
@@ -46,4 +46,4 @@ export const QUERY_SEARCH = gql`
       }
     }
   }
-`
+`;
