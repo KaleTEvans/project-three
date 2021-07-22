@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
 import { useQuery } from '@apollo/react-hooks';
-import { QUERY_POPULAR } from '../utils/queries';
+import { QUERY_POPULAR, QUERY_SEARCH } from '../utils/queries';
 import PopularList from '../components/PopularMovies';
+import { searchMovies } from '../utils/API';
 
 import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { SAVE_MOVIE } from '../utils/mutations';
-import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
+  // create state for holding our search field data
+  const [searchInput, setSearchInput] = useState('');
+  // create state for holding returned api data
+  const [searchedMovies, setSearchedMovies] = useState([]);
+
   // query for popular movie list
   const { loading, data } = useQuery(QUERY_POPULAR);
 
   const popular = data?.popularMovies || [];
-  // create state for holding returned google api data
-  const [searchedBooks, setSearchedBooks] = useState([]);
-  // create state for holding our search field data
-  const [searchInput, setSearchInput] = useState('');
 
   // create state to hold saved bookId values
-  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
-
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
-  useEffect(() => {
-    return () => saveBookIds(savedBookIds);
-  });
+  const [savedMovieIds, setSavedMovieIds] = useState([]);
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -37,35 +33,36 @@ const SearchBooks = () => {
       return false;
     }
 
-    try {   // change link from googleapis to movies db api
-      const response = await fetch (`https://www.googleapis.com/books/v1/volumes?q=${searchInput}`);
-
+    try {   
+      const response = await searchMovies(searchInput)
 
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
-      const { items } = await response.json();
+      console.log(response)
 
-      const bookData = items.map((book) => ({
-        bookId: book.id,
-        authors: book.volumeInfo.authors || ['No author to display'],
-        title: book.volumeInfo.title,
-        description: book.volumeInfo.description,
-        image: book.volumeInfo.imageLinks?.thumbnail || '',
+      const items = await response.json();
+      console.log(items)
+
+      const movieData = items.results.map((movie) => ({
+        movieId: movie.id,
+        title: movie.title,
+        overview: movie.overview,
+        posterPath: movie.poster_path
       }));
 
-      setSearchedBooks(bookData);
+      setSearchedMovies(movieData);
       setSearchInput('');
     } catch (err) {
       console.error(err);
     }
-  };
+  }
 
   // create function to handle saving a book to our database
-  const handleSaveBook = async (bookId) => {
+  const handleSaveMovie = async (movieId) => {
     // find the book in `searchedBooks` state by the matching id
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    const movieToSave = searchedMovies.find((movie) => movie.id === movieId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -75,18 +72,20 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await handleSaveBook(bookToSave, token);
+      const response = await handleSaveMovie(movieToSave, token);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
       // if book successfully saves to user's account, save book id to state
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      setSavedMovieIds([...savedMovieIds, movieToSave.movieId]);
     } catch (err) {
       console.error(err);
     }
   };
+
+  const imgRoute = 'https://image.tmdb.org/t/p/w500';
 
   return (
     <div>
@@ -121,27 +120,26 @@ const SearchBooks = () => {
 
       <Container>
         <h2>
-          {searchedBooks.length
-            ? `Viewing ${searchedBooks.length} results:`
+          {searchedMovies.length
+            ? `Viewing ${searchedMovies.length} results:`
             : <PopularList popular={popular} />}
         </h2>
         <CardColumns>
-          {searchedBooks.map((book) => {
+          {searchedMovies.map((movie) => {
             return (
-              <Card key={book.bookId} border='dark'>
-                {book.image ? (
-                  <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
+              <Card key={movie.id} border='dark'>
+                {movie.posterPath ? (
+                  <Card.Img src={imgRoute + movie.posterPath} alt={`The cover for ${movie.title}`} variant='top' />
                 ) : null}
                 <Card.Body>
-                  <Card.Title>{book.title}</Card.Title>
-                  <p className='small'>Authors: {book.authors}</p>
-                  <Card.Text>{book.description}</Card.Text>
+                  <Card.Title>{movie.title}</Card.Title>
+                  <Card.Text>{movie.overview}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
-                      disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
+                      disabled={savedMovieIds?.some((savedMovieId) => savedMovieId === movie.id)}
                       className='btn-block btn-info'
-                      onClick={() => handleSaveBook(book.bookId)}>
-                      {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
+                      onClick={() => handleSaveMovie(movie.id)}>
+                      {savedMovieIds?.some((savedMovieId) => savedMovieId === movie.id)
                         ? 'This movie has already been saved!'
                         : 'Save this movie!'}
                     </Button>
