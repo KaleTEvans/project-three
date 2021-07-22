@@ -49,7 +49,9 @@ const SearchBooks = () => {
         movieId: movie.id,
         title: movie.title,
         overview: movie.overview,
-        posterPath: movie.poster_path
+        posterPath: movie.poster_path,
+        release_date: movie.release_date,
+        vote_average: movie.vote_average
       }));
 
       setSearchedMovies(movieData);
@@ -134,6 +136,8 @@ const SearchBooks = () => {
                 <Card.Body>
                   <Card.Title>{movie.title}</Card.Title>
                   <Card.Text>{movie.overview}</Card.Text>
+                  <p>Release Date: {movie.release_date}</p>
+                  <p>IMDB score: {movie.vote_average}</p>
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedMovieIds?.some((savedMovieId) => savedMovieId === movie.id)}
