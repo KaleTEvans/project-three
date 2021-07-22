@@ -6,6 +6,8 @@ import { useMutation } from '@apollo/client';
 import { SAVE_MOVIE } from '../utils/mutations';
 import { saveMovieIds, getSavedMovieIds } from '../utils/localStorage';
 
+require('dotenv').config();
+
 const SearchMovies = () => {
   // create state for holding returned google api data
   const [searchedMovies, setSearchedMovies] = useState([]);
@@ -23,6 +25,7 @@ const SearchMovies = () => {
     return () => saveMovieIds(savedMovieIds);
   });
 
+  const apiKey = process.env.REACT_APP_API_KEY
   // create method to search for movies and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -32,7 +35,8 @@ const SearchMovies = () => {
     }
 
     try {   // change link from googleapis to movies db api
-      const response = await fetch (`https://www.googleapis.com/books/v1/volumes?q=${searchInput}`);
+      const response = await fetch (
+        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchInput}`);
 
 
       if (!response.ok) {
@@ -43,9 +47,9 @@ const SearchMovies = () => {
 
       const movieData = items.map((movie) => ({
         movieId: movie.id,
-        movieTitle: movie.movieTitle || ['No title to display'],
+        movieTitle: movie.title || ['No title to display'],
         overview: movie.overview,
-        releaseDate: movie.releaseDate,
+        releaseDate: movie.release_date,
         image: movie.imageLinks?.thumbnail || '',
       }));
 
