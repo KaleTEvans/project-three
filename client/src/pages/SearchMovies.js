@@ -26,6 +26,10 @@ const SearchMovies = () => {
   });
 
   const apiKey = process.env.REACT_APP_API_KEY
+  const apiKey2 = process.env.REACT_APP_API_2
+  console.log(apiKey)
+  console.log(apiKey2)
+
   // create method to search for movies and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -35,24 +39,43 @@ const SearchMovies = () => {
     }
 
     try {   // change link from googleapis to movies db api
-      const response = await fetch (
-        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchInput}`);
+      const response = await fetch(
+        `http://www.omdbapi.com/?apikey=${apiKey}&s=${searchInput}`);
 
 
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
+      
+      const movieResponse = await fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey2}&query=${searchInput}`
+      )
 
-      const { items } = await response.json();
+      
+      const { Search } = await response.json();
+      const data = await movieResponse.json();
+      console.log(Search)
+      console.log(data)
 
-      const movieData = items.map((movie) => ({
+      // const overviewArray = [];
+      // Search.forEach(movie => {
+      //   const movieData = data.results.find(result => result.original_title === movie.Title)
+      //   if (movieData) {
+      //     console.log(movieData.overview)
+      //     overviewArray.push(movieData.overview)
+      //   }
+      // })
+      // console.log(overviewArray)
+
+      const movieData = Search.map((movie, index) => ({
         movieId: movie.id,
-        movieTitle: movie.title || ['No title to display'],
-        overview: movie.overview,
-        releaseDate: movie.release_date,
-        image: movie.imageLinks?.thumbnail || '',
+        movieTitle: movie.Title || ['No title to display'],
+        releaseDate: movie.Year,
+        overview: data.results.find(result => result.original_title === movie.Title) ?
+        data.results.find(result => result.original_title === movie.Title).overview : ' ',
+        image: movie.Poster,
       }));
-
+      console.log(movieData)
       setSearchedMovies(movieData);
       setSearchInput('');
     } catch (err) {
