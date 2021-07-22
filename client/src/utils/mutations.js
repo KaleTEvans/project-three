@@ -25,13 +25,13 @@ export const ADD_USER = gql`
 `;
 
 //change const name related to the project
-export const SAVE_BOOK = gql`
-  mutation saveBook($bookData: BookInput!) {
-    saveBook(bookData: $bookData) {
+export const SAVE_MOVIE = gql`
+  mutation saveMovie($id: String, $title: String!, $overview: String!, $poster_path: String!, $release_date: String, $vote_average: String) {
+    saveMovie(id: $id, title: $title, overview: $overview, poster_path: $poster_path, release_date: $release_date, vote_average: $vote_average) {
       _id
       username
       email
-      savedBooks {
+      savedMovies {
         bookId
         authors
         image
