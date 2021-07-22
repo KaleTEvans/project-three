@@ -89,10 +89,13 @@ const SearchBooks = () => {
   };
 
   return (
-    <>
-      <Jumbotron fluid className='text-light bg-dark'>
+    <div>
+    <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet"></link>
+    
+      <Jumbotron fluid className='jumbo'>
         <Container>
-          <h1>Search for Movies!</h1>
+          <h1 className="title">SEARCH FOR MOVIES!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -103,10 +106,11 @@ const SearchBooks = () => {
                   type='text'
                   size='lg'
                   placeholder='Search for a movie'
+                  className="search"
                 />
               </Col>
               <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
+                <Button type='submit' variant='success' size='lg' className="search">
                   Submit Search
                 </Button>
               </Col>
@@ -148,7 +152,7 @@ const SearchBooks = () => {
           })}
         </CardColumns>
       </Container>
-    </>
+    </div>
   );
 };
 
