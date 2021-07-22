@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink,} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
+import Home from './pages/Home';
 import SearchMovies from './pages/SearchMovies';
 import SavedMovies from './pages/SavedMovies';
 import Navbar from './components/Navbar';
@@ -34,7 +35,8 @@ function App() {
         <>
           <Navbar />
           <Switch>
-            <Route exact path="/" component={SearchMovies} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/search" component={SearchMovies} />
             <Route exact path="/saved" component={SavedMovies} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
           </Switch>

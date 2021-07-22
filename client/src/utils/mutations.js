@@ -26,8 +26,8 @@ export const ADD_USER = gql`
 
 //change const name related to the project
 export const SAVE_MOVIE = gql`
-  mutation saveMovie($movieData: MovieInput!) {
-    saveMovie(movieData: $movieData) {
+  mutation saveMovie($id: String, $title: String!, $overview: String!, $poster_path: String!, $release_date: String, $vote_average: String) {
+    saveMovie(id: $id, title: $title, overview: $overview, poster_path: $poster_path, release_date: $release_date, vote_average: $vote_average) {
       _id
       username
       email

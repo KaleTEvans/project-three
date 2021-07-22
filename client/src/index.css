@@ -1,4 +1,4 @@
-body {
+/* body {
   font-family: 'Rubik', sans-serif;
 }
 
@@ -9,9 +9,37 @@ h4,
 h5,
 h6 {
   font-family: 'Rubik Mono One', sans-serif;
-}
+} */
 
 .small {
   font-weight: 300;
   font-style: italic;
+}
+
+.navbar {
+  background-color: #525174;
+}
+
+h1 {
+  font-family: "Otomanopee One"
+}
+
+.brand {
+  font-family: "Josefin Sans";
+  font-size:xx-large;
+  font-weight: bold;
+}
+
+.button {
+  font-family: "Josefin Sans";
+  font-size: large;
+  font-weight: bold;
+}
+
+.search {
+  font-family: "Josefin Sans";
+}
+
+.jumbo {
+  background-color: #38A3A5;
 }

@@ -31,3 +31,18 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_SEARCH = gql`
+  query singleMovie($title: String!) {
+    singleMovie(title: $title) {
+      results {
+        id
+        title
+        overview
+        poster_path
+        release_date
+        vote_average
+      }
+    }
+  }
+`
