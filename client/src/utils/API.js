@@ -1,5 +1,5 @@
+require('dotenv').config();
 
-const apiKey = '55def83f6c5739d768f4cf225b79eed3';
 
 // get request for popular movies for initial page load
 export const getPopularMovies = () => {
@@ -8,7 +8,7 @@ export const getPopularMovies = () => {
 
 // search for a single movie title
 export const searchMovies = (movieTitle) => {
-    return fetch(`http://api.themoviedb.org/3/search/movie/?api_key=${apiKey}&language=en-US&query=${movieTitle}&page=1`)
+    return fetch(`https://api.themoviedb.org/3/search/movie/?api_key=${process.env.REACT_APP_apiKey}&language=en-US&query=${movieTitle}&page=1`)
 }
 
 // route to get logged in user's info (needs the token)
