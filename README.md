@@ -36,3 +36,9 @@ React
 ---
 
 ## Screenshots
+MAIN PAGE
+![image](./images/main-page.png)
+LOGIN
+![image](./images/login-signup.png)
+SEARCH
+![image](./images/search.png
