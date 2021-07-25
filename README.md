@@ -32,6 +32,7 @@ MySQL
 Sequelize
 Express.js
 React
+Heroku
 
 ---
 
@@ -41,4 +42,19 @@ MAIN PAGE
 LOGIN
 ![image](./images/login-signup.png)
 SEARCH
-![image](./images/search.png
+![image](./images/search.png)
+
+---
+
+## Web Links
+GitHub Repo: https://github.com/KaleTEvans/project-three
+App Dep: http://aqueous-reef-39758.herokuapp.com
+
+---
+
+## Collaboration
+
+---
+
+
+## License
