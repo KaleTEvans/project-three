@@ -25,14 +25,14 @@ Have you ever had hard time looking for a desired movie? Yeah, we've all been th
 ---
 
 ## Technology Used
-HTML
-CSS
-Javascript
-MySQL
-Sequelize
-Express.js
-React
-Heroku
+HTML,
+CSS,
+Javascript,
+MySQL,
+Sequelize,
+Express.js,
+React,
+Heroku,
 
 ---
 
@@ -48,6 +48,7 @@ SEARCH
 
 ## Web Links
 GitHub Repo: https://github.com/KaleTEvans/project-three
+
 App Dep: http://aqueous-reef-39758.herokuapp.com
 
 ---
